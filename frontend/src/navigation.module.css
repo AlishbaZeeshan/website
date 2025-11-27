@@ -1,0 +1,26 @@
+.navBar {
+  padding: 10px 0;
+}
+
+.brandName {
+  font-family: Calibri, sans-serif;
+  font-weight: 900;
+  font-size: 38px;
+  color: darkblue;
+  margin: 0;
+}
+
+.loginButton {
+  background-color: darkblue;
+  color: white;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+
+.customLink {
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  color: darkblue !important;
+}

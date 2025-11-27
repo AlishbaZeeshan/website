@@ -1,0 +1,59 @@
+/* Full page background */
+.pageBackground {
+  background-color: white;
+  min-height: 100vh;
+}
+
+/* Centered login box */
+.loginBox {
+  background-color: lightblue;
+  border-radius: 10px;
+  padding: 20px 30px;
+ 
+}
+
+.logoRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoImage {
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: darkblue;
+}
+
+.forgotLink {
+  color: darkblue;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.buttonContainer {
+  margin-top: 35px;
+}
+
+.loginButton {
+  background-color: darkblue;
+  color: white;
+  font-weight: bold;
+  padding: 8px 70px;
+  border-radius: 6px;
+  border: none;
+  
+}
+
+.signupText {
+  color: black;
+}
+
+.signupLink {
+  color: darkblue;
+  text-decoration: none;
+}

@@ -1,0 +1,113 @@
+.container {
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 16px;
+  
+}
+
+.heading {
+  font-size: 28px;
+  font-weight: 800;
+  color: darkblue;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+
+.addBtnTop {
+  background-color: darkblue;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  
+  margin-bottom: 15px;
+}
+
+
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.formInput,
+.formSelect {
+  padding: 8px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.errorMsg {
+  color: red;
+  font-size: 12px;
+}
+
+.formActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.submitBtn {
+  background-color: darkblue;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  
+}
+
+
+
+.cancelBtn {
+  background-color: gray;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+ 
+}
+
+
+
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+
+}
+
+.table th {
+  background-color: darkblue;
+  color: white;
+  padding: 12px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.table td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #e2e8f0;
+  color: #333;
+  background-color: #f8f9ff;
+}
+
+
+
+.deleteBtn {
+  background-color: #7f1d1d;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+ 
+}
+
+

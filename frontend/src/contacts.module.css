@@ -1,0 +1,68 @@
+
+.contactPage {
+  font-family: Arial, sans-serif;
+}
+
+
+.contactContainer {
+  background-color: darkblue;
+  color: white;
+  text-align: center;
+  padding: 60px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px; 
+}
+
+
+.textCenter {
+  text-align: center;
+}
+
+.heading {
+  font-weight: bold;
+  color: white;
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.subheading {
+  color: #d9e2ff;
+  font-size: 16px;
+}
+
+
+.emailBox {
+  background-color: white;
+  border-radius: 10px;
+  padding: 40px 160px;
+  text-align: center;
+ 
+}
+
+.emailTitle {
+  color: darkblue;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.emailText {
+  color: black;
+  margin: 0;
+}
+.icon {
+  color: darkblue;
+  margin-right: 8px;
+}
+.button{
+  background-color: darkblue;
+   color: white;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.formHeading{
+  color:darkblue;
+}

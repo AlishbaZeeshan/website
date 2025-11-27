@@ -1,0 +1,76 @@
+/* Center everything on screen */
+.center {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fafafa;
+  padding: 20px;
+}
+
+/* Main profile card */
+.profileCard, form {
+  width: 100%;
+  max-width: 450px;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.15);
+  animation: fadeIn 0.4s ease;
+}
+
+/* Form input styling */
+form input,
+form select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  transition: 0.2s ease-in-out;
+}
+
+/* Focus state */
+form input:focus,
+form select:focus {
+  border-color: #8b0000;
+  outline: none;
+  box-shadow: 0 0 5px rgba(139,0,0,0.3);
+}
+
+/* Button styling (dark red) */
+.actionBtn {
+  padding: 12px 18px;
+  border: none;
+  background: darkblue;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+  width: 48%;
+  text-align: center;
+}
+
+/* Hover */
+
+
+/* Error screen */
+.error {
+  color: darkblue;
+  font-size: 18px;
+  text-align: center;
+}
+
+/* Loading text */
+.loading {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Smooth fade animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,246 @@
+
+.appContainer {
+  height: 100vh;
+  overflow: hidden;
+  background: #f5f7fb;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+
+.sidebarCol {
+  padding: 0;
+  min-height: 100vh;
+  
+}
+
+.sidebarInner {
+  background-color: darkblue; /* dark blue */
+  color: white;
+  height: 100%;
+  padding: 20px 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+ 
+}
+
+
+.Name {
+  font-family: Calibri, sans-serif;
+  font-weight: 900;
+  font-size: 38px;
+  color: white;
+  margin: 0;
+}
+
+
+.menuList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+
+.menuList a {
+  text-decoration: none !important; 
+  color: white !important; 
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+
+
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 3px 6px;
+  border-radius: 8px;
+  color: #ffffff;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+
+.menuIcon {
+  font-size: 1.05rem;
+  color: #ffffff;
+  display: inline-flex;
+}
+
+.menuLabel {
+  font-size: 0.95rem;
+  color: #ffffff;
+}
+
+
+.mainCol {
+  padding: 0;
+  height: 100vh;
+  
+}
+
+
+.topbar {
+  background-color: #ffffff;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+ 
+}
+
+.topbarTitle {
+  margin: 0;
+  font-size: 1rem;
+  color: #0a1f44;
+  font-weight: 700;
+}
+
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topIcon {
+  font-size: 1.25rem;
+  color: #0a1f44;
+ 
+}
+
+
+
+.largeCard {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+
+}
+
+
+
+.largeCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.largeCardHeader h5 {
+  font-weight: 600;
+  color: #333;
+}
+
+.largeCardBadge {
+  background-color: darkblue;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+.largeCardText {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+.largeCardStats {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.largeCardStats div {
+  background: #f9fafb;
+  padding: 12px 20px;
+  border-radius: 12px;
+  flex: 1;
+  margin-right: 10px;
+}
+
+.largeCardStats div:last-child {
+  margin-right: 0;
+}
+
+.largeCardStats h6 {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.largeCardStats p {
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
+}
+
+/* Short Blue Cards */
+.shortCard {
+  background: darkblue;
+  color: #ffffff;
+  border-radius: 18px;
+  padding: 18px 20px;
+  margin-bottom: 15px;
+  
+}
+
+
+
+.shortCard h6 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #cce0ff;
+}
+
+.shortCard p {
+  font-size: 14px;
+  color: #ffffff;
+  margin: 0;
+}
+
+
+.cardBox {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+ 
+}
+
+
+
+
+.cardIcon {
+  font-size: 1.7rem;
+  color: #0a1f44;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+
+.placeholder {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 8px;
+  
+  color: #394e6a;
+  font-size: 0.95rem;
+}

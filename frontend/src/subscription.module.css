@@ -1,0 +1,63 @@
+.subscriptionContainer {
+  background-color: darkblue;
+  min-height: 90vh;
+  padding: 40px 0;
+  text-align: center;
+  width: 100%;
+}
+
+.heading {
+  color: white;
+  margin-bottom: 10px;
+}
+
+.subText {
+  color: white;
+  font-size: 15px;
+  margin-bottom: 30px;
+}
+
+.planBox {
+  background-color: white;
+  color: black;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto;
+  padding: 25px;
+  text-align: center;
+
+}
+
+
+
+.planTitle {
+  font-weight: bold;
+  color: #0d47a1;
+}
+
+.planPrice {
+  color: #0d47a1;
+}
+
+.planDescription {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.featuresList {
+  font-size: 14px;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.selectButton {
+  background-color: darkblue;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 20px;
+  
+  
+}
+

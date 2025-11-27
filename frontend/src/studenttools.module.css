@@ -1,0 +1,32 @@
+.studentContainer {
+  margin-top: 50px;
+  margin-bottom: 80px;
+  text-align: center;
+}
+
+.heading {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.description {
+  font-weight: 600;
+  max-width: 700px;
+  margin: 0 auto 30px auto;
+  color: white;
+}
+
+.cardBox {
+  border-radius: 8px;
+  margin: 0 auto;
+}
+
+.cardImage {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 20px auto 10px auto;
+  display: block;
+}

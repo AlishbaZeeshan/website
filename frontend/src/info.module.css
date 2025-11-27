@@ -1,0 +1,32 @@
+.infoContainer {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.infoImage {
+  width: 100%;
+  max-width: 650px;
+  height: 450px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.headingTop {
+  color: darkblue;
+  font-weight: 700;
+  font-size: 3rem;
+  margin: 2rem 0 0 0;
+}
+
+.headingBottom {
+  color: darkblue;
+  font-weight: 700;
+  font-size: 3rem;
+  margin: 0;
+}
+
+.textBox {
+  margin-top: 20px;
+  color: black;
+  font-size: 18px;
+}
