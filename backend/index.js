@@ -18,94 +18,84 @@ import webhookRouter from './routes/webhookroutes.js';
 import paymentRouter from './routes/paymentroutes.js';
 import profile from "./routes/profileroutes.js";
 
+import serverless from "serverless-http";
+
 dotenv.config();
 
-
+// -------------------------
+// EXPRESS APP
+// -------------------------
 const app = express();
 
 app.use('/uploads', express.static('uploads'));
-// CORS setup - Allow both local and production origins
-app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:5174", "https://your-frontend-domain.vercel.app"],
-  methods: ["GET","POST","PUT","DELETE","PATCH","OPTIONS"],
-  allowedHeaders: ["Content-Type","Authorization"],
-  credentials: true,
-  optionsSuccessStatus: 200
-}));
 
-// Stripe webhook must come BEFORE bodyParser.json
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "http://localhost:5174", "https://your-frontend-domain.vercel.app"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
+// Stripe webhook (raw body)
 app.use('/stripe-webhook', express.raw({ type: 'application/json' }), webhookRouter);
 
-app.use(bodyParser.json({ extended: true }));
+// Body parser
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Routes
-app.use('/registrationPage', application);
-app.use('/AdminDashboard', verifyToken, isAdmin, application);
-app.use('/MaintainSubscription', verifyToken, isAdmin, subscription);
-app.use('/', homepage);
-app.use('/UsersView', verifyToken, isAdmin, application);
-app.use('/login', login);
-app.use('/contacts', verifyToken, contact);
-app.use('/Dashboard', verifyToken, dashboard);
-app.use('/create-checkout-session', verifyToken, paymentRouter);
-app.use('/profile',verifyToken,profile);
+// -------------------------
+// ROUTES
+// -------------------------
+app.use("/", homepage);
+app.use("/registrationPage", application);
+app.use("/AdminDashboard", verifyToken, isAdmin, application);
+app.use("/MaintainSubscription", verifyToken, isAdmin, subscription);
+app.use("/UsersView", verifyToken, isAdmin, application);
+app.use("/login", login);
+app.use("/contacts", verifyToken, contact);
+app.use("/Dashboard", verifyToken, dashboard);
+app.use("/create-checkout-session", verifyToken, paymentRouter);
+app.use("/profile", verifyToken, profile);
 
-//multer 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/')
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now();
-    cb(null, uniqueSuffix + file.originalname)
-  }
-})
-
-
-
-// Get image by componentKey
-// Serve all component images dynamically
+// Image fetch route
 app.get("/component-image/:key", async (req, res) => {
   try {
     const key = req.params.key;
-
-    // Look for the image in DB
     const image = await imageModel.findOne({ componentKey: key });
 
     if (!image) {
-      return res.status(404).json({ 
-        status: "not found", 
-        message: `No image found for componentKey: ${key}` 
-      });
+      return res.status(404).json({ status: "not found", message: `No image found for ${key}` });
     }
 
-    // Return image info
-    res.json({ 
-      status: "ok", 
-      data: { image: image.image, componentKey: image.componentKey } 
-    });
-
+    res.json({ status: "ok", data: image });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ status: "error", error });
   }
 });
 
-
-
-
-// MongoDB connection
+// -------------------------
+// DATABASE CONNECTION
+// -------------------------
 const url = process.env.MONGODB_URI;
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("Database Connected"))
-  .catch(err => console.error(err));
 
-// For local development
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+if (!url) {
+  console.error("❌ MONGODB_URI is missing");
+}
 
-// Export for Vercel
-export default app;
+mongoose
+  .connect(url)
+  .then(() => console.log("✅ MongoDB Connected"))
+  .catch((err) => console.error(err));
+
+// -------------------------
+// EXPORT AS SERVERLESS HANDLER (VERY IMPORTANT)
+// -------------------------
+export const config = {
+  api: {
+    bodyParser: false, // Required for Stripe webhook
+  },
+};
+
+export default serverless(app);
