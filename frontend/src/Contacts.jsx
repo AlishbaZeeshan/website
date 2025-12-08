@@ -3,6 +3,7 @@ import styles from "./contacts.module.css";
 import { FaEnvelope } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { postcontact, getImageByKey } from "./service/api"; // Import getImageByKey
+import { useUsername } from "./UserContext.jsx";
 
 // Validation imports
 import { useForm } from "react-hook-form";
@@ -17,6 +18,7 @@ const schema = z.object({
 });
 
 function Contacts() {
+  const { username } = useUsername();
   const [success, setSuccess] = useState(false);
   const [contactImg, setContactImg] = useState(null);
 
@@ -63,6 +65,12 @@ function Contacts() {
       <div className={styles.contactContainer}>
         <div className={styles.textCenter}>
           <h1 className={styles.heading}>Get in Touch</h1>
+          {username && (
+        <p className="text-center" style={{ fontSize: "1.2rem", marginBottom: "20px" }}>
+          Hello {username}, what would you like to share with us today?
+        </p>
+      )}
+
           <Link to="/" className={styles.subheading}>
             Home {'>'} Contact
           </Link>

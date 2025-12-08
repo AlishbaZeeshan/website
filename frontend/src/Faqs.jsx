@@ -1,9 +1,10 @@
 import React from "react";
 import styles from "./faqs.module.css";
 import {Link} from "react-router-dom";
+import { useUsername } from "./UserContext.jsx"; 
 
 function Faqs() {
-  
+  const { username } = useUsername(); 
   const faqs = [
     {
       question: "How does Learnify create AI-powered notes?",
@@ -34,6 +35,11 @@ function Faqs() {
 
   return (
     <div className={styles.faqPage}>
+      {username && (
+        <p className="text-center" style={{ fontSize: "1.2rem", marginBottom: "20px" }}>
+          Hello {username}, what problem are you facing today?
+        </p>
+      )}
       <h2 className={styles.heading}>Frequently Asked Questions ?</h2>
       <Link to="/" className={styles.backtohome} >Home</Link>
 

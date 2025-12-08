@@ -6,10 +6,12 @@ import "bootstrap/dist/css/bootstrap.css"
 import "bootstrap/dist/js/bootstrap.bundle.min.js"
 import { RouterProvider } from 'react-router-dom'
 import router from './routes.jsx'
-
+import { UsernameProvider } from './UserContext.jsx'  // ✅ import the provider
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-     <RouterProvider router={router}/>
+    <UsernameProvider>
+      <RouterProvider router={router} />
+    </UsernameProvider>
   </StrictMode>,
 )

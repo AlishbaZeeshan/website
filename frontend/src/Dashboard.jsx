@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaMicrophone, FaUpload, FaBook, FaChartLine, FaBolt } from "react-icons/fa";
 import styles from "./dashboard.module.css";
+import { useUsername } from "./UserContext.jsx";
+
 import { fetchUsername, getImageByKey } from "./service/api"; // import getImageByKey
 
 function Dashboard() {
-  const [firstName, setFirstName] = useState("");
+  const { username, setUsername } = useUsername(); 
   const [message, setMessage] = useState("");
   const [logoUrl, setLogoUrl] = useState(null);
   const navigate = useNavigate();
@@ -15,14 +17,17 @@ function Dashboard() {
     const getUser = async () => {
       try {
         const data = await fetchUsername();
-        setFirstName(data.firstName);
+        if (data.firstName) {
+          setUsername(data.firstName); // store firstName in context
+        }
       } catch (error) {
         console.error("Error fetching user:", error);
         navigate("/login");
       }
     };
     getUser();
-  }, [navigate]);
+  }, [navigate, setUsername]);
+
 
   // Fetch logo dynamically
   useEffect(() => {
@@ -74,7 +79,7 @@ function Dashboard() {
       {/* Welcome Section */}
       <div className="container text-center mt-5">
         <h2 className={styles.welcome}>
-          Welcome back, {firstName ? firstName : "User"}!
+           Welcome back, {username ? username : "User"}!
         </h2>
         <p className={styles.subtitle}>
           Ready to explore? Choose how you'd like to get started today.

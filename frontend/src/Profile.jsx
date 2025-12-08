@@ -3,7 +3,10 @@ import { getwholeuserData, deleteUserbyUser, UpdateUserByUser } from "./service/
 import styles from "./profile.module.css";
 import { useNavigate } from "react-router-dom";
 
+
 function Profile() {
+ 
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

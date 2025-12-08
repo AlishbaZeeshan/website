@@ -1,27 +1,29 @@
-
 .appContainer {
-  height: 100vh;
-  overflow: hidden;
+  display: flex;
+  min-height: 100vh; /* use min-height instead of fixed height */
   background: #f5f7fb;
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
 }
 
-
 .sidebarCol {
-  padding: 0;
-  min-height: 100vh;
-  
+  height: 100vh; /* force full viewport height */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;
+  overflow-y: auto;
 }
 
+
+/* Sidebar inner content scrollable if needed */
 .sidebarInner {
-  background-color: darkblue; /* dark blue */
-  color: white;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   padding: 20px 16px;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
- 
+  background-color: darkblue;
+  color: white;
 }
 
 
@@ -82,11 +84,16 @@
 }
 
 
+/* Main content now scrollable */
 .mainCol {
-  padding: 0;
-  height: 100vh;
-  
+  margin-left: 170px; /* offset for sidebar */
+  padding: 20px 24px; /* you can tweak horizontal padding */
+  min-height: 100vh; 
+  box-sizing: border-box;
+  overflow-x: hidden; /* prevent horizontal scrollbar */
 }
+
+
 
 
 .topbar {
@@ -244,3 +251,4 @@
   color: #394e6a;
   font-size: 0.95rem;
 }
+

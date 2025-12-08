@@ -85,7 +85,7 @@ function UserView() {
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
-            <th>Password</th>
+            {/* <th>Password</th> */}
             <th>Date of Birth</th>
             <th>Field of Study</th>
             <th>Education Level</th>
@@ -99,7 +99,7 @@ function UserView() {
               <td>{user.firstName}</td>
               <td>{user.lastName}</td>
               <td>{user.email}</td>
-              <td>{user.password}</td>
+              {/* <td>{user.password}</td> */}
               <td>{user.dob}</td>
               <td>{user.field}</td>
               <td>{user.education}</td>

@@ -7,12 +7,11 @@ import Faqs from "./Faqs"
 
 
 function App() {
-  return <>
- 
-  <LandingPage />   
- 
-
-  </>
+  return (
+    
+      <LandingPage />
+  
+  );
   
 }
 
