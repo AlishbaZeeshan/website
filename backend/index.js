@@ -14,40 +14,40 @@ import contact from "./routes/contactroutes.js";
 import dashboard from "./routes/dashboardroutes.js";
 import verifyToken from "./middlewares/verifyToken.js";
 import isAdmin from "./middlewares/isAdmin.js";
-import webhookRouter from './routes/webhookroutes.js';
-import paymentRouter from './routes/paymentroutes.js';
+import webhookRouter from "./routes/webhookroutes.js";
+import paymentRouter from "./routes/paymentroutes.js";
 import profile from "./routes/profileroutes.js";
 
 import serverless from "serverless-http";
 
 dotenv.config();
 
-// -------------------------
-// EXPRESS APP
-// -------------------------
 const app = express();
 
-app.use('/uploads', express.static('uploads'));
+// Static folder
+app.use("/uploads", express.static("uploads"));
 
+// CORS
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174", "https://your-frontend-domain.vercel.app"],
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
   })
 );
 
 // Stripe webhook (raw body)
-app.use('/stripe-webhook', express.raw({ type: 'application/json' }), webhookRouter);
+app.use(
+  "/stripe-webhook",
+  express.raw({ type: "application/json" }),
+  webhookRouter
+);
 
-// Body parser
+// Body parser (after webhook)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// -------------------------
 // ROUTES
-// -------------------------
 app.use("/", homepage);
 app.use("/registrationPage", application);
 app.use("/AdminDashboard", verifyToken, isAdmin, application);
@@ -59,43 +59,37 @@ app.use("/Dashboard", verifyToken, dashboard);
 app.use("/create-checkout-session", verifyToken, paymentRouter);
 app.use("/profile", verifyToken, profile);
 
-// Image fetch route
+// IMAGE ROUTE
 app.get("/component-image/:key", async (req, res) => {
   try {
     const key = req.params.key;
     const image = await imageModel.findOne({ componentKey: key });
 
     if (!image) {
-      return res.status(404).json({ status: "not found", message: `No image found for ${key}` });
+      return res.status(404).json({
+        status: "not found",
+        message: `No image found for componentKey: ${key}`,
+      });
     }
 
     res.json({ status: "ok", data: image });
   } catch (error) {
-    res.status(500).json({ status: "error", error });
+    res.status(500).json({ status: "error", error: error.message });
   }
 });
 
-// -------------------------
-// DATABASE CONNECTION
-// -------------------------
-const url = process.env.MONGODB_URI;
+// CONNECT TO MONGODB
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.log("MongoDB Error:", err));
 
-if (!url) {
-  console.error("❌ MONGODB_URI is missing");
+// LOCAL SERVER (ignored on Vercel)
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
 
-mongoose
-  .connect(url)
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch((err) => console.error(err));
-
-// -------------------------
-// EXPORT AS SERVERLESS HANDLER (VERY IMPORTANT)
-// -------------------------
-export const config = {
-  api: {
-    bodyParser: false, // Required for Stripe webhook
-  },
-};
-
-export default serverless(app);
+// FOR VERCEL SERVERLESS
+export const handler = serverless(app);
+export default app;
