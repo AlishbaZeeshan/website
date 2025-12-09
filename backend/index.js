@@ -14,82 +14,97 @@ import contact from "./routes/contactroutes.js";
 import dashboard from "./routes/dashboardroutes.js";
 import verifyToken from "./middlewares/verifyToken.js";
 import isAdmin from "./middlewares/isAdmin.js";
-import webhookRouter from "./routes/webhookroutes.js";
-import paymentRouter from "./routes/paymentroutes.js";
+import webhookRouter from './routes/webhookroutes.js';
+import paymentRouter from './routes/paymentroutes.js';
 import profile from "./routes/profileroutes.js";
-
-import serverless from "serverless-http";
 
 dotenv.config();
 
 const app = express();
 
-// Static folder
-app.use("/uploads", express.static("uploads"));
+// Serve uploads folder
+app.use('/uploads', express.static('uploads'));
 
-// CORS
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+// CORS setup - Allow both local and production origins
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "https://your-frontend-domain.vercel.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+  optionsSuccessStatus: 200
+}));
 
-// Stripe webhook (raw body)
-app.use(
-  "/stripe-webhook",
-  express.raw({ type: "application/json" }),
-  webhookRouter
-);
+// Stripe webhook must come BEFORE bodyParser.json
+app.use('/stripe-webhook', express.raw({ type: 'application/json' }), webhookRouter);
 
-// Body parser (after webhook)
-app.use(bodyParser.json());
+// Body parser
+app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// ROUTES
-app.use("/", homepage);
-app.use("/registrationPage", application);
-app.use("/AdminDashboard", verifyToken, isAdmin, application);
-app.use("/MaintainSubscription", verifyToken, isAdmin, subscription);
-app.use("/UsersView", verifyToken, isAdmin, application);
-app.use("/login", login);
-app.use("/contacts", verifyToken, contact);
-app.use("/Dashboard", verifyToken, dashboard);
-app.use("/create-checkout-session", verifyToken, paymentRouter);
-app.use("/profile", verifyToken, profile);
+// Routes
+app.use('/registrationPage', application);
+app.use('/AdminDashboard', verifyToken, isAdmin, application);
+app.use('/MaintainSubscription', verifyToken, isAdmin, subscription);
+app.use('/', homepage);
+app.use('/UsersView', verifyToken, isAdmin, application);
+app.use('/login', login);
+app.use('/contacts', verifyToken, contact);
+app.use('/Dashboard', verifyToken, dashboard);
+app.use('/create-checkout-session', verifyToken, paymentRouter);
+app.use('/profile', verifyToken, profile);
 
-// IMAGE ROUTE
-app.get("/component-image/:key", async (req, res) => {
-  try {
-    const key = req.params.key;
-    const image = await imageModel.findOne({ componentKey: key });
-
-    if (!image) {
-      return res.status(404).json({
-        status: "not found",
-        message: `No image found for componentKey: ${key}`,
-      });
-    }
-
-    res.json({ status: "ok", data: image });
-  } catch (error) {
-    res.status(500).json({ status: "error", error: error.message });
+// Multer setup
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + file.originalname);
   }
 });
 
-// CONNECT TO MONGODB
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.log("MongoDB Error:", err));
+// Get image by componentKey
+// Serve all component images dynamically
+app.get("/component-image/:key", async (req, res) => {
+  try {
+    const key = req.params.key;
 
-// LOCAL SERVER (ignored on Vercel)
-if (process.env.NODE_ENV !== "production") {
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-}
+    // Look for the image in DB
+    const image = await imageModel.findOne({ componentKey: key });
+    if (!image) {
+      return res.status(404).json({
+        status: "not found",
+        message: `No image found for componentKey: ${key}`
+      });
+    }
 
-// FOR VERCEL SERVERLESS
-export const handler = serverless(app);
+    // Return image info
+    res.json({
+      status: "ok",
+      data: { image: image.image, componentKey: image.componentKey }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: "error", error });
+  }
+});
+
+// MongoDB connection
+const url = process.env.MONGODB_URI;
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("Database Connected"))
+  .catch(err => console.error(err));
+
+// For local development
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+// Export for Vercel
 export default app;
