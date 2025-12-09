@@ -1,7 +1,8 @@
 import axios from "axios";
 
-const url="http://localhost:5000";
-// const url="https://backend-sigma-henna.vercel.app";
+//const url="http://localhost:5000";
+// const url="https://https://websitebackend-jade.vercel.app/";
+const url="https://websitebackend-jade.vercel.app";
 
 
 export const addUser=async (userData)=>{
